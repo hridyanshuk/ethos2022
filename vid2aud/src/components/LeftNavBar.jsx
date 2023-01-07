@@ -18,13 +18,13 @@ function LeftNavBar({
         
     var rightRoutes=[]
     rightRoutes.push({
-        routeName: "Video",
-        route: "/",
+        routeName: "Dashboard",
+        route: "/3424",
         element: <Play />
     })
     rightRoutes.push({
         routeName: "Collection",
-        route: "/collection",
+        route: "/2234/collection",
         element: <>Collection</>
     })
     rightRoutes.push({
@@ -44,15 +44,10 @@ function LeftNavBar({
             </div>
             <div className="left_navbar_main">
                 <Routes>
-                    <Route path='/' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
+                    {/* <Route path='/' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} /> */}
                     <Route path='/:userid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} />
                     <Route path='/:userid/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
-                    
-                    <Route path='/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
                     <Route path='/:userid/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
-                    
-                    <Route path='/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} />
-                    <Route path='/:userid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} />
                     <Route path='/:userid/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} />
                 </Routes>
             </div>    

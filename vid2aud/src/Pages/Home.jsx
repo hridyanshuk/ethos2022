@@ -61,10 +61,24 @@ function Home() {
                 <div className="loader-text">Uploading ...</div>
             </div>
             
-            <NavBar />
-            <div className="main_content jstfy_centre">          
-                <LinkInput />
-                <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/main"/>
+            <div className="flex space-evenly">          
+                <div className="flex flex-col align-center justify-center space-evenly imageHome">
+                    <div>
+                        <img src="Video.png" height={"200px"}/>
+                    </div>
+                    <div>
+                        <img src="downarrow3.png" height={"100px"} />
+                    </div>
+                    <div>
+                        <img src="audio.png" height={"200px"}/>
+                    </div>
+                </div>
+                <div className="main_content">
+                    <NavBar />
+                    <LinkInput />
+                    <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/main"/>
+                </div>
+                
             </div>
                 
 

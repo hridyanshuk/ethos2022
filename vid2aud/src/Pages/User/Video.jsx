@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom"
 
 import "../../css/pages/user/video.css"
@@ -33,18 +33,16 @@ function Video() {
         vidid
     } = useParams()
 
-    if(userid === undefined) {
-
-    }
-
-    // else if(vidid === undefined) {
-    //     return (
-    //         <Routes>
-    //             <Route path="/" element={<VidNotFound />} />
-    //             <Route path="/:vidid" element={<Video />} />
-    //         </Routes>
-    //     )
-    // }
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        console.log(userid, vidid)
+        if(vidid===undefined) {
+            console.log(userid+"/collection")
+            // navigate()
+            console.log(vidid, userid)
+        }
+    }, [])
 
     return (
         <div className="main_scrn">

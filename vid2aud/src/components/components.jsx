@@ -72,7 +72,7 @@ function FileInput({
                         <button className="upload_button" id="file_upload_button" onClick={async (e) => {
                             loaderRef.current.style.display="block"
 
-                            mainRef.current.style.backgroundColor="#3a3a3a71"
+                            mainRef.current.style.backgroundColor="#7a7a7a71"
 
                             const targ = fileRef.current
                             const vid = targ.files[0] 

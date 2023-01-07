@@ -4,7 +4,7 @@ import "../css/pages.css"
 function About() {
     return (
         <div className="main_scrn">
-            {/* <NavBar/> */}
+            <NavBar/>
             {/* <div className="main_content" > */}
                 <div className="about_pg">
                     <h1>About this application</h1>

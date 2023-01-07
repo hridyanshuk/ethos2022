@@ -25,6 +25,8 @@ root.render(
 
         <Route path='/play' element={<Play />} />
         <Route path='/main/*' element={<UserApp />} />
+
+        <Route path="/*" element={<>ERROR 404</>}/>
       </Routes>
         
     </BrowserRouter>
