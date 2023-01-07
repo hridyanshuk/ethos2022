@@ -2,6 +2,10 @@
 .home_navbar {
     display: flex;
     justify-content: center;
+    position: fixed;
+    /* align-self: center; */
+    width: 100%;
+
 }
 
 .home_navbar ul {
@@ -10,8 +14,8 @@
     padding-right: 5%;
 
     height: 80px;
-    width: 70%;
-
+    /* width: 70%; */
+    min-width: fit-content;
 
     background-color: #272727;
     border-bottom-left-radius: 20px;
@@ -26,6 +30,8 @@
     padding: 0;
     list-style: none;
     text-decoration: none;
+    margin: 0px 20px;
+    min-width: fit-content;
     
 }
 .home_navbar li * {

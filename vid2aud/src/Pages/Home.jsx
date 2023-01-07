@@ -64,7 +64,7 @@ function Home() {
             <NavBar />
             <div className="main_content jstfy_centre">          
                 <LinkInput />
-                <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/play"/>
+                <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/main"/>
             </div>
                 
 
