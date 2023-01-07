@@ -9,12 +9,11 @@ function Play() {
     
     return (
         <div className="main_scrn">
-            <NavBar />
             <div className="main_content" >
-                <audio src="http://localhost:8000/test/audio" controls/>
+                <button>Convert</button>
+                <button>Save</button>
+                <button>Play</button>
             </div>
-                
-
         </div>
     )
 }

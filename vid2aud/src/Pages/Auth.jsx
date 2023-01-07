@@ -19,7 +19,7 @@ function SignIn() {
                 <input spellCheck="false" className="auth_input auth_input_user" placeholder="Username" type="text" />
                 <input spellCheck="false" className="auth_input auth_input_pass" placeholder="password" type="password" />
                 <button onClick={() => {}} className="auth_btn">Sign In</button>
-                <Link className="auth_btn" to="/signup">Sign up</Link>
+                <Link className="auth_btn" to="/auth/signup">Sign up</Link>
             </div>
         </div>
     )
@@ -34,7 +34,7 @@ function SignUp() {
                 <input spellCheck="false" className="auth_input auth_input_pass" placeholder="Password" type="password" />
                 <input spellCheck="false" className="auth_input auth_input_pass" placeholder="Confirm Password" type="password" />
                 <button onClick={() => {}} className="auth_btn">Sign Up</button>
-                <Link className="auth_btn" to="signin">Sign in</Link>
+                <Link className="auth_btn" to="/auth/signin">Sign in</Link>
             </div>
         </div>
     )
