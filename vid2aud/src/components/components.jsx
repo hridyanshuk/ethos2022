@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "../css/components.css"
 import axios from "../axios_stuff"
+
+import { useNavigate } from "react-router-dom"
+
 
 function LinkInput() {
     return (
@@ -11,66 +14,108 @@ function LinkInput() {
 }
 
 
-// function fileChunking(file, size) {
-//     let chunk = 2*1042*1042
-//     let x=size/chunk
-//     if(x*chunk < size) x++
-//     for(var i=0 ; i<x ; i++) {
-//         const data = {
-//             index: i,
-//             video: file.substring(i*chunk, chunk)
-//         }
-        
-//         axios.post(
-//             '/upload',
-//             data,
-//         )
-//         .then((res) => console.log(res))
 
-//     }
-// }
+async function uploadFile(e, setNofFiles) {
+    var vid=e.target.files[0]
+    console.log(vid)
+    setNofFiles(e.target.files.length)
+    
+    // const reader = new FileReader();
+    // reader.readAsDataURL(vid);
+    // reader.onload = async () => {
+    //     const fileContents = reader.result;
+    //     // do something with the file contents
+    //     const data = {
+    //         video: fileContents
+    //     }
+    
+    
+    // const formData = new FormData();
+    // formData.append('file', vid)
+    // formData.append('name', "12314")
+    
+    // await axios.post('/upload', formData, {
+    //     headers: {
+    //         'Content-Type': 'multipart/form-data'
+    //     }
+    // })
+    // .then(response => {
+    //     console.log(response.data);
+    // })
+}
 
 
-function FileInput() {
+function FileInput({
+    loaderRef,
+    mainRef,
+    navigateTo
+}) {
+    
+    const fileRef=useRef()
+    const navigate = useNavigate()
 
-    const [file, setFile] = useState()
+    const [nofFiles, setNofFiles] = useState(0)
+    
     return (
+        
         <div className="file_input">
             <label htmlFor="file_upload" className="file_upload_label">
-                Upload File
+                Browse
             </label>
-            <input id="file_upload" type="file" accept=".mp4, .avi, .mov" onChange={async (e) => {
-                var vid=e.target.files[0]
-                console.log(vid)
-                // const reader = new FileReader();
-                // reader.readAsDataURL(vid);
-                // reader.onload = async () => {
-                //     const fileContents = reader.result;
-                //     // do something with the file contents
-                //     const data = {
-                //         video: fileContents
-                //     }
-                
-                
-                const formData = new FormData();
-                formData.append('file', vid)
-                formData.append('name', "12314")
-                
-                await axios.post('/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                })
-                .then(response => {
-                    console.log(response.data);
-                })
+            <input ref={fileRef} id="file_upload" type="file" accept="video/*" onChange={e => uploadFile(e, setNofFiles)}/>
+            
+            
 
+            {(function () {
+                if(nofFiles === 1) return (
+                    <>
+                        <button className="upload_button" id="file_upload_button" onClick={async (e) => {
+                            loaderRef.current.style.display="block"
+
+                            mainRef.current.style.backgroundColor="#3a3a3a71"
+
+                            const targ = fileRef.current
+                            const vid = targ.files[0] 
+
+                            const formData = new FormData()
+                            formData.append('file', vid)
+                            formData.append('name', "12314")
+                            
+                            await axios.post('/upload', formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then(response => {
+                                console.log(response.data);
+                            })
+                            fileRef.current.value = ""
+                            console.log(fileRef.current.files.lngth)
+                            loaderRef.current.style.display="none"
+                            mainRef.current.style.backgroundColor="#3A3A3A"
+                            setNofFiles(0)
+
+                            navigate(navigateTo)
+
+                        }}>Upload file</button>
+                </>
+                )})()}
                 
-            }}/>
         </div>
     )
 }
 
+function UploadSources() {
+    const linkRef = useRef()
+    const fileRef = useRef()
 
+    return (
+        <div className="upload_sources">
+            <LinkInput ref={linkRef} />
+            <FileInput ref={fileRef} />
+        </div>
+    )
+
+}
 
 export {LinkInput, FileInput}

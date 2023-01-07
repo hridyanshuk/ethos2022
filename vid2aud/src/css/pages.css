@@ -93,3 +93,15 @@ body {
 .auth_btn:hover {
     cursor: pointer;
 }
+
+.about_pg {
+    /* border: 1px solid white; */
+    width: 900px;
+    height: fit-content;
+    margin-top: 50px;
+
+    font-family: sans-serif;
+    color: white;
+    padding: 20px;
+    font-size: 15px;
+}

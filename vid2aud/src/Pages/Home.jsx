@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom"
 
 import "../css/pages.css"
+import "../css/loader.css"
 // import "../css/components.css"
 import { FileInput, LinkInput } from "../components/components"
+import { useRef } from "react"
 
 
 function NavBar() {
@@ -49,13 +51,20 @@ function NavBar() {
 // }
 
 function Home() {
-    
+    const loaderRef = useRef()
+    const mainRef = useRef()
     return (
-        <div className="main_scrn">
+        <div ref={mainRef} className="main_scrn">
+            
+            <div ref={loaderRef} style={{display:"none"}} className="loader-wrapper">
+                <div className="loder-crcil"></div>
+                <div className="loader-text">Uploading ...</div>
+            </div>
+            
             <NavBar />
             <div className="main_content jstfy_centre">          
                 <LinkInput />
-                <FileInput />
+                <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/play"/>
             </div>
                 
 
