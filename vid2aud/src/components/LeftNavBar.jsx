@@ -1,5 +1,6 @@
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import '../css/leftnavbar.css'
+import { Dashboard } from '../Pages/User/Dashboard'
 import { Play } from '../Pages/User/Play'
 import { Video } from '../Pages/User/Video'
 import { RightNavBar } from './RightNavBar'
@@ -44,7 +45,7 @@ function LeftNavBar({
             <div className="left_navbar_main">
                 <Routes>
                     <Route path='/' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
-                    <Route path='/:userid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
+                    <Route path='/:userid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} />
                     <Route path='/:userid/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
                     
                     <Route path='/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
