@@ -22,7 +22,7 @@ const collectionSchema = mongoose.Schema({
         type: ObjectId,
         required: true
     },
-    collection: {
+    audios: {
         type: Array,
         of: ObjectId
     }
@@ -30,5 +30,5 @@ const collectionSchema = mongoose.Schema({
 
 const Collection = mongoose.model('collections', collectionSchema)
 const Audio = mongoose.model('audios', audioSchema)
-
-export {Collection, Audio}
+// const Collection = 2
+export {Collection, Audio, ObjectId}

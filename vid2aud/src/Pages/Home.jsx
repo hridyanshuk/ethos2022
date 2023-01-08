@@ -92,7 +92,7 @@ function Home() {
                             return (
                                 <div className="flex flex-col justify-center">
                                     <LinkInput />
-                                    <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/main"/>
+                                    <FileInput mainRef={mainRef} loaderRef={loaderRef}/>
                                 </div>
                             )
                         }

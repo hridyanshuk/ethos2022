@@ -1,4 +1,6 @@
-import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { isAuthenticated } from '../actions/authCheck'
 import '../css/leftnavbar.css'
 import { Dashboard } from '../Pages/User/Dashboard'
 import { Play } from '../Pages/User/Play'
@@ -10,6 +12,16 @@ import { RightNavBar } from './RightNavBar'
 function LeftNavBar({
     routes
 }) {
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const logged = isAuthenticated()
+        if(!logged) {
+            navigate('/auth')
+        }
+    }, [])
+
+
     var key=0
     const routeList = routes.map(route => <li key={key++}><Link className='left_navbar_link' onClick={() => route.onClick()} to={route.route}>{route.routeName}</Link></li>)
     // const innerRouteList = innerRoutes.map(route => <li><Link className='left_navbar_link' to={route.route}>{route.routeName}</Link></li>)
@@ -45,10 +57,15 @@ function LeftNavBar({
             <div className="left_navbar_main">
                 <Routes>
                     {/* <Route path='/' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} /> */}
-                    <Route path='/:userid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} />
-                    <Route path='/:userid/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
+                    {/* <Route path='/:userid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} />
+                    <Route path='/:userid/video/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
                     <Route path='/:userid/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
-                    <Route path='/:userid/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} />
+                    <Route path='/:userid/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} /> */}
+                    <Route path='' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} />
+                    <Route path='/video/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
+                    <Route path='/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
+                    <Route path='/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} />
+                
                 </Routes>
             </div>    
         </div>

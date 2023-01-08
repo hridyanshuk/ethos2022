@@ -7,7 +7,7 @@ const cwd = process.cwd();
 
 const router = Router()
 
-router.post('/test', testController)
+router.post('/convert', testController)
 
 router.get('/test/audio', (req, res) => {
     res.sendFile('convertedAudio/output.mp3', { root: cwd });

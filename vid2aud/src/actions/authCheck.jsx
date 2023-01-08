@@ -20,7 +20,7 @@ function isAuthenticated() {
             }
             return authResponse.authenticated
         }
-        else return auth==true
+        else return auth==="true"
     })()
 }
 

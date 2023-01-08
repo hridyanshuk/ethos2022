@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react"
-import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom"
+import { useEffect, useRef, useState } from "react"
+import { Link, Route, Routes, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { instance as axios } from "../../axios_stuff"
 
 import "../../css/pages/user/video.css"
 
@@ -8,10 +9,25 @@ function VidInfo({
     userid,
     vidid
 }) {
+    const [vidName, setVidName] = useState("")
+    console.log("Vid info")
+
+    useEffect(() => {
+        // console.log()
+        (async () => {
+            const vidInfoRes = await axios.post('/getVidInfo', {
+                user_id: userid,
+                count: vidid
+            })
+            const vidInfo = vidInfoRes.data
+            setVidName(vidInfo.name)         
+        })()
+    }, [])
+
     return (
         <div className="video_info">
             <h2 className="video_info_title">
-                Nidhogg Tutorial.mp4
+                {vidName}
             </h2>
             <div className="hgt_100"></div>
             <div className="video_info_bottom">

@@ -31,7 +31,7 @@ root.render(
         <Route path='/about' element={<About />} />
 
         <Route path='/play' element={<Play />} />
-        <Route path='/main/*' element={<UserApp />} />
+        <Route path='/main/:userid/*' element={<UserApp />} />
 
         <Route path="/*" element={<>ERROR 404</>}/>
       </Routes>

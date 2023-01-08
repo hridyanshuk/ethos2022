@@ -51,8 +51,7 @@ async function uploadFile(e, setNofFiles) {
 
 function FileInput({
     loaderRef,
-    mainRef,
-    navigateTo
+    mainRef
 }) {
     
     const fileRef=useRef()
@@ -88,21 +87,26 @@ function FileInput({
                             
                             
 
-                            await axios.post('/upload', formData, {
+                            const uploadResponse = await axios.post('/upload', formData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data'
                                 }
                             })
-                            .then(response => {
-                                console.log(response.data);
+                            console.log(uploadResponse)
+                            const _id = Cookies.get('_id')
+                            const fileResponse = await axios.post('/updateFile', {
+                                _id: _id,
+                                fileName: uploadResponse.data.filename,
+                                originalName: uploadResponse.data.originalName
                             })
+
                             fileRef.current.value = ""
                             console.log(fileRef.current.files.length)
                             loaderRef.current.style.display="none"
                             mainRef.current.style.backgroundColor="#3A3A3A"
                             setNofFiles(0)
 
-                            navigate(navigateTo)
+                            navigate(`/main/${_id}/video/${fileResponse.data.count}`)
 
                         }}>Upload file</button>
                 </>

@@ -1,14 +1,19 @@
 import { Router } from "express";
-import { uploadController } from "../controllers/vidController.js";
+import { fileLogController, uploadController, vidInfoController } from "../controllers/vidController.js";
 
 import multer from "multer";
+import Video from "../models/Video.js";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "./uploadedFiles")
     },
-    filename: function (req, file, cb) {
-        cb(null, Date.now()+"."+file.originalname.split('.')[file.originalname.split('.').length -1])
+    filename: async function (req, file, cb) {
+        
+        const count = await Video.countDocuments()
+
+        
+        cb(null, String(count)+"."+file.originalname.split('.')[file.originalname.split('.').length -1])
     }
 })
 
@@ -30,6 +35,17 @@ router.post(
     '/upload',
     upload.single('file'),
     uploadController
+)
+
+
+router.post(
+    '/updateFile',
+    fileLogController
+)
+
+router.post(
+    '/getVidInfo',
+    vidInfoController
 )
 
 export {router}
