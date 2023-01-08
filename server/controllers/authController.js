@@ -1,5 +1,16 @@
 import { User } from "../models/User.js"
+import jwt from "jsonwebtoken"
+
 import cookieParser from "cookie-parser"
+
+const minAge = 5*24*60*60
+
+function createToken(id) {
+    return jwt.sign({id}, 'secret key', {
+        expiresIn: minAge
+    })
+}
+
 
 const loginController = (req, res) => {
     res.send("Sign in page")
@@ -7,7 +18,7 @@ const loginController = (req, res) => {
 }
 
 const signupController = async (req, res) => {
-
+    console.log(req.headers)
     const {
         name,
         email,
@@ -16,15 +27,22 @@ const signupController = async (req, res) => {
     } = req.body
     console.log(req.body)
     try {
-        await User.create({
+        const newUser = await User.create({
             name,
             email,
             username,
             password
         })
-        res
-        .status(201)
-        .send(`Added user ${username}`)
+
+        const token = createToken(newUser._id)
+        console.log(token)
+        
+        res.json({
+            token,
+            username: newUser.username,
+            _id: newUser._id,
+            expiresIn: 3
+        })
     }
     catch (err) {
         res

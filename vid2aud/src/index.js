@@ -1,3 +1,5 @@
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -13,6 +15,11 @@ import { UserApp } from './Pages/User/UserAppPage';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const token = Cookies.get("token")
+
+
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
