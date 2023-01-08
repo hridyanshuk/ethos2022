@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken"
 
 import cookieParser from "cookie-parser"
 
+const USERNOTFOUND = 2
+
 const minAge = 5*24*60*60
 
 function createToken(id) {
@@ -12,7 +14,30 @@ function createToken(id) {
 }
 
 
-const loginController = (req, res) => {
+const loginController = async (req, res) => {
+    const {
+        username,
+        password
+    } = req.body
+    try {
+        const user = await User.findOne({
+            username: username,
+            password: password
+        })
+        const token = createToken(user._id)
+        res.json({
+            token: token,
+            username: user.username,
+            _id: user._id,
+            expiresIn: 3
+        })
+    }
+    catch(err) {
+        res.status(400).send({
+            error: "User not found",
+            errorCode: USERNOTFOUND
+        })
+    }
     res.send("Sign in page")
     .status(200)
 }

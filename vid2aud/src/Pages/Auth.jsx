@@ -67,7 +67,12 @@ function SignIn() {
             <div className="auth_opt">
                 <input ref={userNameRef} spellCheck="false" className="auth_input auth_input_user" placeholder="Username" type="text" />
                 <input ref={passRef} spellCheck="false" className="auth_input auth_input_pass" placeholder="password" type="password" />
-                <button onClick={() => {}} className="auth_btn">Sign In</button>
+                <button onClick={() => {
+                    signinAPI(
+                        userNameRef,
+                        passRef
+                    )
+                }} className="auth_btn">Sign In</button>
                 <Link className="auth_btn" to="/auth/signup">Sign up</Link>
             </div>
         </div>
