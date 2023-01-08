@@ -11,7 +11,7 @@ function LeftNavBar({
     routes
 }) {
     var key=0
-    const routeList = routes.map(route => <li key={key++}><Link className='left_navbar_link' to={route.route}>{route.routeName}</Link></li>)
+    const routeList = routes.map(route => <li key={key++}><Link className='left_navbar_link' onClick={() => route.onClick()} to={route.route}>{route.routeName}</Link></li>)
     // const innerRouteList = innerRoutes.map(route => <li><Link className='left_navbar_link' to={route.route}>{route.routeName}</Link></li>)
     // const routePageList = innerRoutes.map(route => <Route path={route.route} element={route.element} />)
 
@@ -32,7 +32,7 @@ function LeftNavBar({
         route: "/play",
         element: <>Play</>
     })
-    
+    console.log(routeList)
     const location = useLocation()
 
     return (

@@ -4,7 +4,8 @@ import "../css/pages.css"
 import "../css/loader.css"
 // import "../css/components.css"
 import { FileInput, LinkInput } from "../components/components"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import { isAuthenticated } from "../actions/authCheck"
 
 
 function NavBar() {
@@ -53,6 +54,16 @@ function NavBar() {
 function Home() {
     const loaderRef = useRef()
     const mainRef = useRef()
+    const [logged, setLogged] = useState(false)
+    useEffect(() => {
+        (async function() {
+            const isLoggedIn = await isAuthenticated()
+            console.log("Is logged in", isLoggedIn)
+            setLogged(isLoggedIn)
+        })()
+
+    }, [setLogged])
+
     return (
         <div ref={mainRef} className="main_scrn">
             
@@ -75,8 +86,24 @@ function Home() {
                 </div>
                 <div className="main_content">
                     <NavBar />
-                    <LinkInput />
-                    <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/main"/>
+                    {(()=>{
+                        if(logged) {
+                            console.log("UPLOADDD")
+                            return (
+                                <div className="flex flex-col justify-center">
+                                    <LinkInput />
+                                    <FileInput mainRef={mainRef} loaderRef={loaderRef} navigateTo = "/main"/>
+                                </div>
+                            )
+                        }
+                        else {
+                            
+                            return (
+                                <img src="EthosSaptangLabs.png" />
+                            )
+                        }
+                    })()}
+                        
                 </div>
                 
             </div>

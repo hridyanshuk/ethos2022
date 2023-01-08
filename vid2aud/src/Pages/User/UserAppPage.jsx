@@ -7,6 +7,8 @@ import { Home } from "../Home"
 import { Play } from "./Play"
 
 import "../../css/pages.css"
+import { configInstance, instance as axios } from "../../axios_stuff"
+import Cookies from "js-cookie"
 
 var routes=[]
 
@@ -73,6 +75,22 @@ innerRoutes.push({
     element: <>Collection</>
 })
 
+function logoutFn() {
+    (async() => {
+        const config = configInstance()
+        const logoutResponse = await axios.get('/logout', config)
+        console.log("logoutResponse", logoutResponse)
+        Cookies.set('auth', Boolean(logoutResponse.data.authenticated))
+        Cookies.set('token', logoutResponse.data.token)
+        Cookies.set('_id', "logout")
+    })()
+}
+
+routes.push({
+    routeName: "Log out",
+    route: '/auth',
+    onClick: logoutFn
+})
 
 
 

@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { authController, loginController, signupController } from "../controllers/authController.js"
+import { authController, loginController, logoutController, signupController } from "../controllers/authController.js"
 
 const router = Router()
 
@@ -16,6 +16,11 @@ router.post(
 router.get(
     '/authenticate',
     authController
+)
+
+router.get(
+    '/logout',
+    logoutController
 )
 
 export {router}

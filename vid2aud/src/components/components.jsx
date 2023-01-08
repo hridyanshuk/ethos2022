@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import "../css/components.css"
-import {instance as axios} from "../axios_stuff"
+import {configInstance, instance as axios} from "../axios_stuff"
 
-import { useNavigate } from "react-router-dom"
+import { redirect, useNavigate } from "react-router-dom"
+import Cookies from "js-cookie"
+import { isAuthenticated } from "../actions/authCheck"
 
 
 function LinkInput() {
@@ -45,6 +47,8 @@ async function uploadFile(e, setNofFiles) {
 }
 
 
+
+
 function FileInput({
     loaderRef,
     mainRef,
@@ -53,9 +57,10 @@ function FileInput({
     
     const fileRef=useRef()
     const navigate = useNavigate()
-
     const [nofFiles, setNofFiles] = useState(0)
     
+    const [file, setFile] = useState()
+
     return (
         
         <div className="file_input">
@@ -79,8 +84,10 @@ function FileInput({
 
                             const formData = new FormData()
                             formData.append('file', vid)
-                            formData.append('name', "12314")
+                            const isLoggedIn = await isAuthenticated()
                             
+                            
+
                             await axios.post('/upload', formData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data'
@@ -90,7 +97,7 @@ function FileInput({
                                 console.log(response.data);
                             })
                             fileRef.current.value = ""
-                            console.log(fileRef.current.files.lngth)
+                            console.log(fileRef.current.files.length)
                             loaderRef.current.style.display="none"
                             mainRef.current.style.backgroundColor="#3A3A3A"
                             setNofFiles(0)

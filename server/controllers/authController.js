@@ -17,14 +17,14 @@ function createToken(_id) {
 const authController = async (req, res) => {
     console.log(req.headers)
     const token = req.headers['x-auth-token']
-    console.log(token)
+    console.log("authenticate", token)
     if(!token) {
         res.json({
             authenticated: false
         })
     }
     else {
-        jwt.verify(token, "secret key", (err, decoded) => {
+        jwt.verify(token, "secret key", async (err, decoded) => {
             if(err) {
                 res.send(400).json({
                     errorCode: JWTVERIFYERROR,
@@ -33,10 +33,19 @@ const authController = async (req, res) => {
             }
             else {
                 console.log(decoded)
-                res.json({
-                    authenticated: true,
-                    _id: decoded._id
-                })
+                try {
+                    await User.findById(decoded._id)
+                    res.json({
+                        authenticated: true,
+                        _id: decoded._id
+                    })
+                }
+                catch(err) {
+                    res.json({
+                        authenticated: false
+                    })
+                }
+                
             }
         })
     }
@@ -107,8 +116,37 @@ const signupController = async (req, res) => {
     }
 }
 
+function logoutController(req, res) {
+    const token = req.headers['x-auth-token']
+    
+    if(!token) {
+        res.json({
+            authenticated: false
+        })
+    }
+    else {
+        jwt.verify(token, "secret key", async (err, decoded) => {
+            if(err) {
+                res.send(400).json({
+                    errorCode: JWTVERIFYERROR,
+                    error: "error while verifying JWT token"
+                })
+            }
+            else {
+                const newToken = createToken("logout")
+                res.json({
+                    authenticated: false,
+                    token: newToken
+                })
+            }
+        })
+    }
+}
+
+
 export {
     loginController,
     signupController,
-    authController
+    authController,
+    logoutController
 }

@@ -6,6 +6,7 @@ import Cookies from "js-cookie"
 import "../css/pages/auth.css"
 import { useEffect, useRef } from "react"
 import {configInstance, getHeaders, instance as axios} from "../axios_stuff"
+import { isAuthenticated } from "../actions/authCheck"
 
 function AuthOptions() {
     return (
@@ -59,10 +60,12 @@ async function signinAPI(
                 error: response.data.error
             }
         }
-        console.log(response.data)
+        console.log("signin reponse.data", response.data)
         Cookies.set('token', response.data.token, {
             expires: response.data.expiresIn
         })
+        Cookies.set('auth', true)
+        Cookies.set('_id', response.data._id)
         return {
             username: response.data.username,
             _id: response.data._id
@@ -229,30 +232,42 @@ function Auth () {
 
     useEffect(() => {
         
+        // (async function() {
+        //     const token = Cookies.get('token')
+        //     const auth = Cookies.get('auth')
+        //     console.log("auth cookie", auth)
+        //     if(auth) {
+        //         const _id = Cookies.get('_id')
+        //         navigate(`/main/${_id}`)
+        //     }
+        //     if(token) {
+        //         const config = configInstance()
+        //         const authResponse = await axios.get(
+        //             '/authenticate',
+        //             config
+        //         )
+        //         .then(response => response.data)
+        //         console.log(authResponse)
+        //         if(authResponse.authenticated) {
+        //             Cookies.set('auth', true)
+        //             Cookies.set('_id', authResponse._id)
+        //             navigate(`/main/${authResponse._id}`)
+        //         }
+        //     }
+        // })()
         (async function() {
-            const token = Cookies.get('token')
-            const auth = Cookies.get('auth')
-            if(auth && auth.authenticated) {
-                navigate(`/main/${auth._id}`)
-            }
-            if(token) {
-                const config = configInstance()
-                const authResponse = await axios.get(
-                    '/authenticate',
-                    config
-                )
-                .then(response => response.data)
-                console.log(authResponse)
-                if(authResponse.authenticated) {
-                    Cookies.set('auth', true)
-                    Cookies.set('_id', authResponse._id)
-                    navigate(`/main/${authResponse._id}`)
-                }
+            const loggedIn = await isAuthenticated()
+            console.log("LoggedDDDD",loggedIn)
+            console.log(typeof(loggedIn))
+            if(loggedIn===true) {
+                console.log("logged in?", loggedIn)
+                const _id = Cookies.get('_id')
+                console.log(_id)
+                navigate(`/main/${_id}`)
             }
         })()
-            
         return
-    }, [])
+    }, [navigate])
 
     return (
         <div className="main_scrn">
