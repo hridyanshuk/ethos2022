@@ -100,6 +100,8 @@ function FileInput({
                                 originalName: uploadResponse.data.originalName
                             })
 
+                            console.log("FIle info uploaded", fileResponse.data)
+
                             fileRef.current.value = ""
                             console.log(fileRef.current.files.length)
                             loaderRef.current.style.display="none"

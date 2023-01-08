@@ -2,6 +2,7 @@ import { Router } from "express";
 import { convertController } from "../controllers/audioController.js";
 import path from "path"
 import fs from "fs"
+import { request } from "http";
 
 const cwd = process.cwd();
 
@@ -11,8 +12,11 @@ router.post(
     '/convert',
     convertController
 )
-router.get('/test/audio', (req, res) => {
-    res.sendFile('convertedAudio/output.mp3', { root: cwd });
+router.get('/play/:vidid', (req, res) => {
+    const {vidid} = req.params
+    const audioCount = vidid
+    console.log("Play", vidid)
+    res.sendFile(`convertedAudio/${audioCount}.mp3`, { root: cwd });
 })
 
 router.get('/test/audio2', (req, res) => {

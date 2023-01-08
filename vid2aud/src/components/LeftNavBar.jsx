@@ -61,10 +61,10 @@ function LeftNavBar({
                     <Route path='/:userid/video/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
                     <Route path='/:userid/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
                     <Route path='/:userid/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} /> */}
-                    <Route path='' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} />
-                    <Route path='/video/:vidid' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Video />} />} />
-                    <Route path='/collection' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Collection</>} />} />
-                    <Route path='/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} />
+                    {/* <Route path='' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} /> */}
+                    <Route path='/video/:vidid' element={<RightNavBar orig={"/main"} routes={[]} main={<Video />} />} />
+                    <Route path='/collection' element={<RightNavBar orig={"/main"} routes={[]} main={<>Collection</>} />} />
+                    <Route path='/play/:vidid' element={<RightNavBar orig={"/main"} routes={[]} main={<Play />} />} />
                 
                 </Routes>
             </div>    

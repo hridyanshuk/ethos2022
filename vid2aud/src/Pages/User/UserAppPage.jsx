@@ -37,6 +37,21 @@ routes.push({
     element: <Contact />
 })
 
+routes.push({
+    routeName: "Dashboard",
+    route: "/main/3424",
+    element: <Play />
+})
+routes.push({
+    routeName: "Collection",
+    route: "/main/2234/collection",
+    element: <>Collection</>
+})
+routes.push({
+    routeName: "Play",
+    route: "/main/play",
+    element: <>Play</>
+})
 
 
 

@@ -6,6 +6,7 @@ import {router as testRoutes} from './routes/audioRoutes.js'
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import bodyParser from "body-parser";
+import {router as commentRoutes} from "./routes/commentRoutes.js";
 
 
 const app = express()
@@ -47,3 +48,4 @@ mongoose.connect(dbURL)
 app.use(authRoutes)
 app.use(vidRoutes)
 app.use(testRoutes)
+app.use(commentRoutes)

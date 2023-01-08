@@ -22,7 +22,7 @@ function convertController(req, res) {
         PythonShell.run('uploadedVid2Aud.py', options, function (err, results) {
             if (err) console.log(err)
             // results is an array consisting of messages collected during execution
-            console.log('results: %j', results)
+            console.log('results:', results)
         })
     }
     catch(err) {

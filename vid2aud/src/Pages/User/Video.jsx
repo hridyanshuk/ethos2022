@@ -14,7 +14,13 @@ function convert(userid, vidid) {
     })
 }
 
-
+function play(
+    navigate,
+    userid,
+    vidid
+) {
+    navigate(`/main/${userid}/play/${vidid}`)
+}
 
 function VidInfo({
     userid,
@@ -23,6 +29,7 @@ function VidInfo({
     const [vidName, setVidName] = useState("")
     const [upName, setUpName] = useState("")
     console.log("Vid info")
+    const navigate = useNavigate()
 
     useEffect(() => {
         // console.log()
@@ -46,7 +53,7 @@ function VidInfo({
             <div className="video_info_bottom">
                 <button onClick={() => convert(userid, vidid)}>Convert</button>
                 <button>Save</button>
-                <button>Play</button>
+                <button onClick={() => play(navigate, userid, vidid)}>Play</button>
             </div>
             <div className="video_info_footer">
                 Video id: {vidid}

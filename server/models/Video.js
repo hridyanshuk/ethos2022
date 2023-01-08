@@ -16,6 +16,9 @@ const videoCountSchema = mongoose.Schema({
     },
     ext: {
         type: String
+    },
+    duration: {
+        type: Number
     }
 })
 

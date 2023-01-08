@@ -8,7 +8,7 @@
 .left_navbar {
     /* flex: 0.01; */
     background-color: #272727;
-    height: 65%;
+    height: fit-content;
 
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -25,6 +25,11 @@
     justify-content: space-evenly;
     align-items: center;
     height: 100%;
+}
+
+.left_navbar li {
+    height: 20px;
+    margin: 20px;
 }
 
 .left_navbar_link {
