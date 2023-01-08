@@ -80,17 +80,33 @@ async function getDuration(vidid, setMax, setVid) {
 }
 
 
-async function fetchCom(e, vid_id, setComments) {
-    if((Math.round(e.target.currentTime))%10 === 0) {
+const setComment = (val) => {
+    var commentI =  0//localStorage.getItem('commenti')
+    localStorage.setItem(`comment${commentI}`, val.annotations)
+
+}
+async function fetchCom(e, vid_id, setComments, setCommentsI) {
+    const E = e.target
+    if((Math.round(E.currentTime))%5 === 0) {
         const comments = await axios.post('getComments', {
             vid_id: vid_id,
-            time: e.target.currentTime
+            time: E.currentTime
         })
         console.log("comments are ", comments)
         setComments(comments.data)
+        setCommentsI(0)
     }
     else return
 }
+
+function updateTag(e, tagRef, comments, commentsI, setCommentsI) {
+    if(comments.annotations[commentsI] && comments.annotations[commentsI].time === Math.round(e.target.currentTime)) {
+        tagRef.current.innerText = `${comments.annotations[commentsI].time}s: ${comments.annotations[commentsI].comment}`
+        setCommentsI(commentsI+1)
+    }
+    
+}
+
 
 
 function Play() {
@@ -99,14 +115,17 @@ function Play() {
         vidid
     } = useParams()
 
-    const sliderRef = useRef()
-    const [time, setTime] = useState(0)
-    const audioRef = useRef()
-    const timeRef = useRef()
+    
 
+    const sliderRef = useRef()
+    const audioRef = useRef()
+    
+    const [time, setTime] = useState(0)
+    const timeRef = useRef()
+    const tagRef = useRef()
     const commentRef = useRef()
     const [comments, setComments] = useState([])
-
+    const [commentsI, setCommentsI] = useState()
     console.log(comments)
 
     const [vid, setVid] = useState()
@@ -118,43 +137,60 @@ function Play() {
 
     useEffect(() => {
         getDuration(vidid, setMax, setVid)
-        sliderRef.current.value = 0
-        setTime(0)
         // setMax(vid.data.duration)
-    }, [setTime, setMax, getDuration, setVid])
+    }, [])//setTime, setMax, getDuration, setVid
     return (
         <div className="main_scrn">
+            
             <div className="main_content" >
                 
-                <div className="video_info">
-                    <input
-                    ref={timeRef}
-                    value={time}
-                    onFocus={() => audioRef.current.pause()}
-
+                <div className="play_info play_info_time">
                     
+                    <input
+                        className="timestamp_input"
+                        ref={timeRef}
+                        value={time}
+                        onFocus={() => audioRef.current.pause()}
+                        onChange={e => {
+                            audioRef.current.currentTime = e.target.value
+                        }}
+                    />
 
-                    onChange={e => {
-                        audioRef.current.currentTime = e.target.value
-
-                    }} ></input>
-                    <audio onTimeUpdate={e => {
-                        sliderRef.current.value = Math.round(e.target.currentTime)
-                        timeRef.current.value = Math.round(e.target.currentTime)
-                        fetchCom(e, vid._id, setComments)
-
-                    }} style={{display: "none"}} ref={audioRef} controls autoplay>
+                    <audio
+                        onTimeUpdate={e => {
+                            sliderRef.current.value = Math.round(e.target.currentTime)
+                            timeRef.current.value = Math.round(e.target.currentTime)
+                            fetchCom(e, vid._id, setComments, setCommentsI)
+                            updateTag(e, tagRef, comments, commentsI, setCommentsI)  
+                        }}
+                        style={{display: "none"}}
+                        ref={audioRef}
+                        controls
+                    >
                         <source src={`http://localhost:8000/play/${vidid}`} type="audio/mp3" />
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-                <input ref={sliderRef} onChange={() => {
-                    sliderChange(sliderRef, setTime, audioRef)
-                }} className="audioStreamSlider" type="range" min={0} max={max}/>
-                <button onClick={() => togglePlay(audioRef)}>Play/Pause</button>
 
-                <div className="video_info">
-                    <input ref={commentRef} type="text" />
+                <div className="sliderCont">
+                    <input
+                        value={0}
+                        ref={sliderRef}
+                        onChange={() => {
+                            sliderChange(sliderRef, setTime, audioRef)
+                        }}
+                        className="audioStreamSlider"
+                        type="range"
+                        min={0}
+                        max={max}
+                    />
+                </div>
+                
+                <button className="toggleplay_btn" onClick={() => togglePlay(audioRef)}>Play/Pause</button>
+
+                <div className="play_info play_info_comment">
+                    <p ref={tagRef}></p>
+                    <input ref={commentRef} type="text" placeholder={"Add comment"} />
                     <button onClick={e => commentAdd(commentRef, vidid, timeRef)}>Add comment</button>
                 </div>
             </div>

@@ -37,21 +37,23 @@ routes.push({
     element: <Contact />
 })
 
+const _id = Cookies.get('_id')
+
 routes.push({
     routeName: "Dashboard",
-    route: "/main/3424",
+    route: `/main/${_id}`,
     element: <Play />
 })
 routes.push({
     routeName: "Collection",
-    route: "/main/2234/collection",
+    route: `/main/${_id}/collection`,
     element: <>Collection</>
 })
-routes.push({
-    routeName: "Play",
-    route: "/main/play",
-    element: <>Play</>
-})
+// routes.push({
+//     routeName: "Play",
+//     route: "/main/play",
+//     element: <>Play</>
+// })
 
 
 
