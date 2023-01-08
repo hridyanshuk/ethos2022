@@ -9,46 +9,10 @@ import { Play } from "./Play"
 import "../../css/pages.css"
 import { configInstance, instance as axios } from "../../axios_stuff"
 import Cookies from "js-cookie"
-
-var routes=[]
-
-routes.push({
-    routeName: "Home",
-    route: "/",
-    element: <Home />
-})
+import { Navigate, useNavigate } from "react-router-dom"
+import { isAuthenticated } from "../../actions/authCheck"
 
 
-routes.push({
-    routeName: "About",
-    route: "/about",
-    element: <About />
-})
-
-routes.push({
-    routeName: "Developers",
-    route: "/developers",
-    element: <Developers />
-})
-
-routes.push({
-    routeName: "Contact Us",
-    route: "/contact",
-    element: <Contact />
-})
-
-const _id = Cookies.get('_id')
-
-routes.push({
-    routeName: "Dashboard",
-    route: `/main/${_id}`,
-    element: <Play />
-})
-routes.push({
-    routeName: "Collection",
-    route: `/main/${_id}/collection`,
-    element: <>Collection</>
-})
 // routes.push({
 //     routeName: "Play",
 //     route: "/main/play",
@@ -92,7 +56,8 @@ innerRoutes.push({
     element: <>Collection</>
 })
 
-function logoutFn() {
+function logoutFn(navigate) {
+    
     (async() => {
         const config = configInstance()
         const logoutResponse = await axios.get('/logout', config)
@@ -100,19 +65,60 @@ function logoutFn() {
         Cookies.set('auth', Boolean(logoutResponse.data.authenticated))
         Cookies.set('token', logoutResponse.data.token)
         Cookies.set('_id', "logout")
+        navigate('/')
     })()
 }
 
-routes.push({
-    routeName: "Log out",
-    route: '/auth',
-    onClick: logoutFn
-})
+
 
 
 
 function UserApp() {
-    
+    const navigate = useNavigate()
+    var routes=[]
+
+    routes.push({
+        routeName: "Home",
+        route: "/",
+        element: <Home />
+    })
+
+
+    routes.push({
+        routeName: "About",
+        route: "/about",
+        element: <About />
+    })
+
+    routes.push({
+        routeName: "Developers",
+        route: "/developers",
+        element: <Developers />
+    })
+
+    routes.push({
+        routeName: "Contact Us",
+        route: "/contact",
+        element: <Contact />
+    })
+
+    const _id = Cookies.get('_id')
+
+    routes.push({
+        routeName: "Dashboard",
+        route: `/main/${_id}`,
+        element: <Play />
+    })
+    routes.push({
+        routeName: "Collection",
+        route: `/main/${_id}/collection`,
+        element: <>Collection</>
+    })
+    routes.push({
+        routeName: "Log out",
+        route: '/home',
+        onClick: () => logoutFn(navigate)
+    })
     return (
         <div className="main_scrn">
             <div className="main_content" >

@@ -118,7 +118,7 @@ const signupController = async (req, res) => {
 
 function logoutController(req, res) {
     const token = req.headers['x-auth-token']
-    
+    console.log("LOGOUT")
     if(!token) {
         res.json({
             authenticated: false
@@ -127,6 +127,7 @@ function logoutController(req, res) {
     else {
         jwt.verify(token, "secret key", async (err, decoded) => {
             if(err) {
+                console.log("ERROR")
                 res.send(400).json({
                     errorCode: JWTVERIFYERROR,
                     error: "error while verifying JWT token"

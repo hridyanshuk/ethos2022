@@ -49,6 +49,38 @@ body {
     display: none;
 }
 
+.home_logo {
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    justify-content: center;
+    font-family: sans-serif;
+    color: white;
+    height: 100%;
+}
+.home_logo div {
+    margin-top: 100px;
+}
+
+.ethosiitg {
+    font-size: 90px;
+    margin-bottom: 20px;
+}
+
+.saptanglabs {
+    font-size: 70px;
+    margin-top: 10px;
+    color: rgb(255, 73, 73);
+    max-width: 500px;
+    margin-bottom: 5px;
+}
+
+.saptanglabs2 {
+    font-size: 70px;
+    margin-top: 10px;
+    color: rgb(255, 163, 163);
+    max-width: 500px;
+}
 
 .colorreset {
     /* background-color: transparent; */
