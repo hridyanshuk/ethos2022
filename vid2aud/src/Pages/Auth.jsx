@@ -18,12 +18,55 @@ function AuthOptions() {
     )
 }
 
+async function signinAPI(
+    userNameRef,
+    passRef
+) {
+    const usernameE = userNameRef.current
+    const passE = passRef.current
+
+    const username = usernameE.value
+    const password = passE.value
+
+    if(username.split(" ").length > 1 || username.length === 0) {
+        errors=true
+        userNameRef.current.style.border="1.5px solid red"
+    }
+    else {
+        userNameRef.current.style.border="none"
+    }
+
+    if(password.length === 0) {
+        errors=true
+        passRef.current.style.border= "1.5px solid red"
+        confirmRef.current.style.border= "1.5px solid red"
+    }
+    else {
+        passRef.current.style.border= "none"
+        confirmRef.current.style.border= "none"
+    }
+
+    if(errors) return
+
+    await axios.post('/signin', {
+        username: username,
+        password: password
+    })
+    .then(response => {
+        Cookies.set('token', response.data.token, {
+            expires: response.data.expiresIn
+        })
+    })
+}
+
 function SignIn() {
+    const userNameRef = useRef()
+    const passRef = useRef()
     return (
         <div className="auth_opt_cont">
             <div className="auth_opt">
-                <input spellCheck="false" className="auth_input auth_input_user" placeholder="Username" type="text" />
-                <input spellCheck="false" className="auth_input auth_input_pass" placeholder="password" type="password" />
+                <input ref={userNameRef} spellCheck="false" className="auth_input auth_input_user" placeholder="Username" type="text" />
+                <input ref={passRef} spellCheck="false" className="auth_input auth_input_pass" placeholder="password" type="password" />
                 <button onClick={() => {}} className="auth_btn">Sign In</button>
                 <Link className="auth_btn" to="/auth/signup">Sign up</Link>
             </div>
@@ -79,6 +122,8 @@ async function signupAPI(
     else {
         emailRef.current.style.border="none"
     }
+
+    if(errors) return
 
     await axios.post('/signup',{
         name: name,
