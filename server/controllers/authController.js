@@ -4,13 +4,42 @@ import jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser"
 
 const USERNOTFOUND = 2
-
+const JWTVERIFYERROR = 4
 const minAge = 5*24*60*60
 
-function createToken(id) {
-    return jwt.sign({id}, 'secret key', {
+function createToken(_id) {
+    return jwt.sign({_id}, 'secret key', {
         expiresIn: minAge
     })
+}
+
+
+const authController = async (req, res) => {
+    console.log(req.headers)
+    const token = req.headers['x-auth-token']
+    console.log(token)
+    if(!token) {
+        res.json({
+            authenticated: false
+        })
+    }
+    else {
+        jwt.verify(token, "secret key", (err, decoded) => {
+            if(err) {
+                res.send(400).json({
+                    errorCode: JWTVERIFYERROR,
+                    error: "error while verifying JWT token"
+                })
+            }
+            else {
+                console.log(decoded)
+                res.json({
+                    authenticated: true,
+                    _id: decoded._id
+                })
+            }
+        })
+    }
 }
 
 
@@ -19,13 +48,16 @@ const loginController = async (req, res) => {
         username,
         password
     } = req.body
+    console.log("Sign in")
+    console.log(req.body)
     try {
         const user = await User.findOne({
             username: username,
             password: password
         })
         const token = createToken(user._id)
-        res.json({
+        console.log(user)
+        res.status(200).json({
             token: token,
             username: user.username,
             _id: user._id,
@@ -33,13 +65,12 @@ const loginController = async (req, res) => {
         })
     }
     catch(err) {
-        res.status(400).send({
+        res.status(200).json({
             error: "User not found",
-            errorCode: USERNOTFOUND
+            errorCode: USERNOTFOUND,
+            err: err
         })
     }
-    res.send("Sign in page")
-    .status(200)
 }
 
 const signupController = async (req, res) => {
@@ -78,5 +109,6 @@ const signupController = async (req, res) => {
 
 export {
     loginController,
-    signupController
+    signupController,
+    authController
 }

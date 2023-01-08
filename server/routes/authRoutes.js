@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { loginController, signupController } from "../controllers/authController.js"
+import { authController, loginController, signupController } from "../controllers/authController.js"
 
 const router = Router()
 
-router.get(
-    '/login',
+router.post(
+    '/signin',
     loginController
 )
 
@@ -13,5 +13,9 @@ router.post(
     signupController
 )
 
+router.get(
+    '/authenticate',
+    authController
+)
 
 export {router}
