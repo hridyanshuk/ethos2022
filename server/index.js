@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import {router as authRoutes} from "./routes/authRoutes.js";
 import {router as vidRoutes} from './routes/vidRoutes.js'
-import {router as testRoutes} from './routes/testRoutes.js'
+import {router as testRoutes} from './routes/audioRoutes.js'
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import bodyParser from "body-parser";

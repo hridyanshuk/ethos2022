@@ -47,6 +47,10 @@
     letter-spacing: 2px;
 }
 
+.video_info_bottom button:hover {
+    cursor: pointer;
+}
+
 .video_info_bottom button:nth-child(1) {
     background-color: rgba(171, 0, 0, 0.571);
 }

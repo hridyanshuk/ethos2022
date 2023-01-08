@@ -22,7 +22,8 @@ async function fileLogController(req, res) {
     const vid = await Video.create({
         user_id: _id,
         count: nm,
-        name: originalName
+        name: originalName,
+        ext: fileName.split('.')[fileName.split('.').length-1]
     })
     console.log(vid)
     res.json(vid)

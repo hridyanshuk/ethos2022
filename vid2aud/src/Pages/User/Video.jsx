@@ -5,11 +5,23 @@ import { instance as axios } from "../../axios_stuff"
 import "../../css/pages/user/video.css"
 
 
+
+function convert(userid, vidid) {
+    axios.post('/convert', {
+        filename: vidid+".mp4",
+        fileCount: vidid,
+        user_id: userid
+    })
+}
+
+
+
 function VidInfo({
     userid,
     vidid
 }) {
     const [vidName, setVidName] = useState("")
+    const [upName, setUpName] = useState("")
     console.log("Vid info")
 
     useEffect(() => {
@@ -20,7 +32,8 @@ function VidInfo({
                 count: vidid
             })
             const vidInfo = vidInfoRes.data
-            setVidName(vidInfo.name)         
+            setVidName(vidInfo.name)
+            setUpName(vidInfo.name+vidInfo.ext) 
         })()
     }, [])
 
@@ -31,7 +44,7 @@ function VidInfo({
             </h2>
             <div className="hgt_100"></div>
             <div className="video_info_bottom">
-                <button>Convert</button>
+                <button onClick={() => convert(userid, vidid)}>Convert</button>
                 <button>Save</button>
                 <button>Play</button>
             </div>
