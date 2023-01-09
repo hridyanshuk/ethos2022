@@ -65,8 +65,7 @@ function Home() {
     }, [setLogged])
 
     return (
-        <div ref={mainRef} className="main_scrn">
-            
+        <div className="main_scrn">
             <div ref={loaderRef} style={{display:"none"}} className="loader-wrapper">
                 <div className="loder-crcil"></div>
                 <div className="loader-text">Uploading ...</div>
@@ -90,7 +89,14 @@ function Home() {
                         if(logged) {
                             console.log("UPLOADDD")
                             return (
-                                <div className="flex flex-col justify-center">
+                                <div className="homepg flex flex-col justify-center yscroll">
+                                    <div className="home_logo">
+                                        <div>
+                                            <h1 className="ethosiitg">Ethosiitg</h1>
+                                            <h2 className="saptanglabs">Saptang Labs</h2>
+                                            <h2 className="saptanglabs2">problem statement</h2>
+                                        </div>
+                                    </div>
                                     <LinkInput />
                                     <FileInput mainRef={mainRef} loaderRef={loaderRef}/>
                                 </div>
@@ -114,6 +120,7 @@ function Home() {
                 
             </div>
                 
+            <div ref={mainRef} className="full"></div>
 
         </div>
     )

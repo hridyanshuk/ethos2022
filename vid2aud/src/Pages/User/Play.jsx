@@ -22,14 +22,14 @@ function togglePlay(audioRef) {
 
 function sliderChange(
     sliderRef,
-    setTime,
+    // setTime,
     audioRef
 ) {
     const sliderCurr = sliderRef.current
     console.log(audioRef.current.currentTime = sliderCurr.value)
     audioRef.current.pause();
     
-    setTime(sliderCurr.value)
+    // setTime(sliderCurr.value)
 }
 
 async function commentAdd(
@@ -40,21 +40,21 @@ async function commentAdd(
 
     const _id = Cookies.get('_id')
 
-    const vidInfo = await axios.post(
-        '/getVidInfo', {
-            user_id: _id,
-            count: vidid
-        }
-    )
+    // const vidInfo = await axios.post(
+    //     '/getVidInfo', {
+    //         user_id: _id,
+    //         _id: vidid
+    //     }
+    // )
 
-    if(vidInfo.data.error) {
-        return
-    }
+    // if(vidInfo.data.error) {
+    //     return
+    // }
     const comm = commentRef.current
     const ti = timeRef.current
     const commentResponse = await axios.post(
         '/createComment', {
-            vid_id: vidInfo.data._id,
+            vid_id: vidid,
             comment: comm.value,
             time: ti.value
         }
@@ -70,21 +70,16 @@ async function getDuration(vidid, setMax, setVid) {
         const vidInfo = await axios.post(
             '/getVidInfo', {
                 user_id: _id,
-                count: vidid
+                _id: vidid
             }
         )
     setMax(vidInfo.data.duration)
-    setVid(vidInfo.data)
+    // setVid(vidInfo.data)
     console.log("x", vidInfo.data.duration)
     
 }
 
 
-const setComment = (val) => {
-    var commentI =  0//localStorage.getItem('commenti')
-    localStorage.setItem(`comment${commentI}`, val.annotations)
-
-}
 async function fetchCom(e, vid_id, setComments, setCommentsI) {
     const E = e.target
     if((Math.round(E.currentTime))%5 === 0) {
@@ -107,6 +102,10 @@ function updateTag(e, tagRef, comments, commentsI, setCommentsI) {
     
 }
 
+const setComments = (val) => {
+    var commentI = localStorage.get('commenti')
+    localStorage.set(`comment${commentI}`, val.annotations)
+}
 
 
 function Play() {
@@ -120,7 +119,7 @@ function Play() {
     const sliderRef = useRef()
     const audioRef = useRef()
     
-    const [time, setTime] = useState(0)
+    // const [time, setTime] = useState(0)
     const timeRef = useRef()
     const tagRef = useRef()
     const commentRef = useRef()
@@ -128,7 +127,7 @@ function Play() {
     const [commentsI, setCommentsI] = useState()
     console.log(comments)
 
-    const [vid, setVid] = useState()
+    // const [vid, setVid] = useState()
     const [max, setMax] = useState()
 
     console.log("Playing")
@@ -136,7 +135,7 @@ function Play() {
     const _id = Cookies.get('_id')
 
     useEffect(() => {
-        getDuration(vidid, setMax, setVid)
+        getDuration(vidid, setMax)
         // setMax(vid.data.duration)
     }, [])//setTime, setMax, getDuration, setVid
     return (
@@ -146,10 +145,10 @@ function Play() {
                 
                 <div className="play_info play_info_time">
                     
-                    <input
+                    <output
+                        htmlFor="player_slider"
                         className="timestamp_input"
                         ref={timeRef}
-                        value={time}
                         onFocus={() => audioRef.current.pause()}
                         onChange={e => {
                             audioRef.current.currentTime = e.target.value
@@ -160,7 +159,7 @@ function Play() {
                         onTimeUpdate={e => {
                             sliderRef.current.value = Math.round(e.target.currentTime)
                             timeRef.current.value = Math.round(e.target.currentTime)
-                            fetchCom(e, vid._id, setComments, setCommentsI)
+                            fetchCom(e, vidid, setComments, setCommentsI)
                             updateTag(e, tagRef, comments, commentsI, setCommentsI)  
                         }}
                         style={{display: "none"}}
@@ -177,9 +176,11 @@ function Play() {
                         value={0}
                         ref={sliderRef}
                         onChange={() => {
-                            sliderChange(sliderRef, setTime, audioRef)
+                            sliderChange(sliderRef, audioRef)
+                            // sliderChange(sliderRef, setTime, audioRef)
                         }}
                         className="audioStreamSlider"
+                        id="player_slider"
                         type="range"
                         min={0}
                         max={max}
@@ -191,7 +192,10 @@ function Play() {
                 <div className="play_info play_info_comment">
                     <p ref={tagRef}></p>
                     <input ref={commentRef} type="text" placeholder={"Add comment"} />
-                    <button onClick={e => commentAdd(commentRef, vidid, timeRef)}>Add comment</button>
+                    <button onClick={e => {
+                        commentAdd(commentRef, vidid, timeRef)
+                        commentRef.current.value=""
+                    }}>Add comment</button>
                 </div>
             </div>
         </div>

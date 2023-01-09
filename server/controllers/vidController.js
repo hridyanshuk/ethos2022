@@ -1,4 +1,5 @@
 import { PythonShell } from "python-shell";
+import { Collection } from "../models/Collection.js";
 import Video from "../models/Video.js";
 
 function uploadController(req, res) {
@@ -59,13 +60,13 @@ async function fileLogController(req, res) {
 async function vidInfoController(req, res) {
     const {
         user_id,
-        count
+        _id
     } = req.body
 
     try {
         const ret = await Video.findOne({
             user_id,
-            count
+            _id
         })
         res.json(ret)
     }
@@ -76,4 +77,31 @@ async function vidInfoController(req, res) {
     }
 }
 
-export {uploadController, fileLogController, vidInfoController}
+
+async function vidsController(req, res) {
+    const {
+        user_id
+    } = req.body
+
+    console.log(req.body)
+
+    try {
+        const audios = await Video.find({user_id: user_id})
+        console.log(audios)
+
+        res.json({
+            audios
+        })
+    }
+    catch(err) {
+        console.log(err)
+        res.json({
+            error: "Could not find collection",
+            err: err
+        })
+    }
+
+}
+
+
+export {uploadController, fileLogController, vidInfoController, vidsController}

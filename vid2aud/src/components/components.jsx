@@ -76,8 +76,8 @@ function FileInput({
                         <button className="upload_button" id="file_upload_button" onClick={async (e) => {
                             loaderRef.current.style.display="block"
 
-                            mainRef.current.style.backgroundColor="#7a7a7a71"
-
+                            // mainRef.current.style.backgroundColor="#7a7a7a71"
+                            mainRef.current.style.display = "block"
                             const targ = fileRef.current
                             const vid = targ.files[0] 
 
@@ -108,7 +108,7 @@ function FileInput({
                             mainRef.current.style.backgroundColor="#3A3A3A"
                             setNofFiles(0)
 
-                            navigate(`/main/${_id}/video/${fileResponse.data.count}`)
+                            navigate(`/main/${_id}/video/${fileResponse.data._id}`)
 
                         }}>Upload file</button>
                 </>

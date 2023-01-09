@@ -38,7 +38,7 @@ async function createCommentController(req, res) {
             comment: comment,
             time: time
         })
-
+        console.log(newComment)
         res.json({
             added: newComment
         })

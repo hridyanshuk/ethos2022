@@ -116,7 +116,7 @@ function UserApp() {
     })
     routes.push({
         routeName: "Log out",
-        route: '/home',
+        route: '/auth',
         onClick: () => logoutFn(navigate)
     })
     return (

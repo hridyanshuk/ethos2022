@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { isAuthenticated } from '../actions/authCheck'
 import '../css/leftnavbar.css'
+import { Collection } from '../Pages/User/Collection'
 import { Dashboard } from '../Pages/User/Dashboard'
 import { Play } from '../Pages/User/Play'
 import { Video } from '../Pages/User/Video'
@@ -63,7 +64,7 @@ function LeftNavBar({
                     <Route path='/:userid/:vidid/play' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<>Play</>} />} /> */}
                     {/* <Route path='' element={<RightNavBar orig={"/main"} routes={rightRoutes} main={<Dashboard />} />} /> */}
                     <Route path='/video/:vidid' element={<RightNavBar orig={"/main"} routes={[]} main={<Video />} />} />
-                    <Route path='/collection' element={<RightNavBar orig={"/main"} routes={[]} main={<>Collection</>} />} />
+                    <Route path='/collection' element={<RightNavBar orig={"/main"} routes={[]} main={<Collection />} />} />
                     <Route path='/play/:vidid' element={<RightNavBar orig={"/main"} routes={[]} main={<Play />} />} />
                 
                 </Routes>

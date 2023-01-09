@@ -13,19 +13,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    border-radius: 20px;
-    width: 50%;
-    border: 2px solid rgb(44, 44, 44);
+    /* border-radius: 20px; */
+    width: 40%;
+    border: 1px solid black;
+    font-family: sans-serif;
 }
 
 .auth_opt_comp {
     background-color: #272727;
     text-decoration: none;
     text-align: center;
-    line-height: 50px;
+    line-height: 60px;
     color: white;
     height: 60px;
-    width: 90%;
+    min-width: 70%;
+    max-width: 90%;
     border-radius: 10px;
     margin: 20px;
 }
@@ -34,7 +36,7 @@
     outline: none;
     border: none;
     height: 40px;
-    max-width: 400px;
+    max-width: 100%;
     width: 90%;
     font-weight: 700;
     font-family: sans-serif;

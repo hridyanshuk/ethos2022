@@ -1,0 +1,22 @@
+.vidbox {
+    border: white solid 1px;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    min-height: 50px;
+    width: 600px;
+    margin: 20px 0;
+    padding: 10px 20px;
+}
+
+.vidbox:hover {
+    cursor: pointer;
+}
+
+.collection_pg {
+    margin-top: 50px;
+    font-family: sans-serif;
+    color: white;
+    padding: 0 30px;
+    background-color: rgba(161, 161, 161, 0.443)
+}

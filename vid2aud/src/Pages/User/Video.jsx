@@ -6,8 +6,8 @@ import "../../css/pages/user/video.css"
 
 
 
-function convert(userid, vidid) {
-    axios.post('/convert', {
+async function convert(userid, vidid) {
+    await axios.post('/convert', {
         filename: vidid+".mp4",
         fileCount: vidid,
         user_id: userid
@@ -23,11 +23,13 @@ function play(
 }
 
 function VidInfo({
+    mainRef,
+    loaderRef,
     userid,
     vidid
 }) {
     const [vidName, setVidName] = useState("")
-    const [upName, setUpName] = useState("")
+    const [vidC, setVidC] = useState()
     console.log("Vid info")
     const navigate = useNavigate()
 
@@ -36,11 +38,11 @@ function VidInfo({
         (async () => {
             const vidInfoRes = await axios.post('/getVidInfo', {
                 user_id: userid,
-                count: vidid
+                _id: vidid
             })
             const vidInfo = vidInfoRes.data
             setVidName(vidInfo.name)
-            setUpName(vidInfo.name+vidInfo.ext) 
+            setVidC(vidInfo.count) 
         })()
     }, [])
 
@@ -51,12 +53,18 @@ function VidInfo({
             </h2>
             <div className="hgt_100"></div>
             <div className="video_info_bottom">
-                <button onClick={() => convert(userid, vidid)}>Convert</button>
-                <button>Save</button>
+                <button onClick={async () => {
+                    mainRef.current.style.display = "block"
+                    loaderRef.current.style.display = "block"
+                    await convert(userid, vidC)
+                    mainRef.current.style.display = "none"
+                    loaderRef.current.style.display = "none"
+                }}>Convert</button>
+                {/* <button>Save</button> */}
                 <button onClick={() => play(navigate, userid, vidid)}>Play</button>
             </div>
             <div className="video_info_footer">
-                Video id: {vidid}
+                Video id: {vidC}
             </div>
         </div>
     )
@@ -69,22 +77,38 @@ function Video() {
         vidid
     } = useParams()
 
+    // const vidI = await axios.post('/getVidInfo', {
+    //     user_id: userid,
+    //     _id: vidid
+    // })
+
+    // const vid_id = vidI._id
+
+
+
     const navigate = useNavigate()
     
-    useEffect(() => {
-        console.log(userid, vidid)
-        if(vidid===undefined) {
-            console.log(userid+"/collection")
-            // navigate()
-            console.log(vidid, userid)
-        }
-    }, [])
+    // useEffect(() => {
+    //     console.log(userid, vidid)
+    //     if(vidid===undefined) {
+    //         console.log(userid+"/collection")
+    //         // navigate()
+    //         console.log(vid_id, userid)
+    //     }
+    // }, [])
+    const mainRef = useRef()
+    const loaderRef = useRef()
 
     return (
         <div className="main_scrn">
-            <div className="main_content">
-                <VidInfo userid={userid} vidid={vidid} />
+            <div ref={loaderRef} style={{display:"none"}} className="loader-wrapper">
+                <div className="loder-crcil"></div>
+                <div className="loader-text">Converting ...</div>
             </div>
+            <div className="main_content">
+                <VidInfo loaderRef={loaderRef} mainRef={mainRef} userid={userid} vidid={vidid} />
+            </div>
+            <div ref={mainRef} className="full"></div>
         </div>
     )
 }

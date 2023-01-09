@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { fileLogController, uploadController, vidInfoController } from "../controllers/vidController.js";
+import { fileLogController, uploadController, vidInfoController, vidsController } from "../controllers/vidController.js";
 
 import multer from "multer";
 import Video from "../models/Video.js";
@@ -46,6 +46,11 @@ router.post(
 router.post(
     '/getVidInfo',
     vidInfoController
+)
+
+router.post(
+    '/collection',
+    vidsController
 )
 
 export {router}

@@ -23,12 +23,13 @@ function convertController(req, res) {
             if (err) console.log(err)
             // results is an array consisting of messages collected during execution
             console.log('results:', results)
+            res.status(200).send("Converted Probably")
         })
     }
     catch(err) {
         console.log(err)
     }
-    res.status(200).send("Converted Probably")
+    
 }
 
 
