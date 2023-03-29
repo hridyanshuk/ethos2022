@@ -105,13 +105,13 @@ function Home() {
                         else {
                             
                             return (
-                                <div className="home_logo">
-                                    <div>
-                                        <h1 className="ethosiitg">Ethosiitg</h1>
-                                        <h2 className="saptanglabs">Saptang Labs</h2>
-                                        <h2 className="saptanglabs2">problem statement</h2>
+                                    <div className="home_logo">
+                                        <div>
+                                            <h1 className="ethosiitg">Ethosiitg</h1>
+                                            <h2 className="saptanglabs">Saptang Labs</h2>
+                                            <h2 className="saptanglabs2">problem statement</h2>
+                                        </div>
                                     </div>
-                                </div>
                             )
                         }
                     })()}

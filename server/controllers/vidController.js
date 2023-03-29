@@ -1,7 +1,7 @@
 import { PythonShell } from "python-shell";
 import { Collection } from "../models/Collection.js";
 import Video from "../models/Video.js";
-
+import fs from "fs"
 function uploadController(req, res) {
     const file = req.file;
     console.log(file)
@@ -11,6 +11,8 @@ function uploadController(req, res) {
         originalName: file.originalname
     })
 }
+
+const cwd = process.cwd();
 
 async function fileLogController(req, res) {
     const {
@@ -24,9 +26,9 @@ async function fileLogController(req, res) {
 
     let options = {
         mode: 'text',
-        pythonPath: 'C:/Users/Hridyanshu/AppData/Local/Programs/Python/Python310/python.exe',
+        pythonPath: `${cwd}/python/python.exe`,
         pythonOptions: ['-u'], 
-        scriptPath: 'C:/Users/Hridyanshu/Desktop/Github/ethos2022/server/pythonScripts',
+        scriptPath: `${cwd}/pythonScripts`,
         args: [fileName]
     }
 

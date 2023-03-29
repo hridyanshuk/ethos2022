@@ -91,6 +91,8 @@ const signupController = async (req, res) => {
         password
     } = req.body
     console.log(req.body)
+
+    
     try {
         const newUser = await User.create({
             name,

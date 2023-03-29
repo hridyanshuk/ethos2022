@@ -10,7 +10,7 @@ import { isAuthenticated } from "../actions/authCheck"
 function LinkInput() {
     return (
         <div className="link_input">
-            <input type="url" placeholder="Enter url" />
+            {/* <input type="url" placeholder="Enter url" /> */}
         </div>
     )
 }
@@ -66,6 +66,12 @@ function FileInput({
             <label htmlFor="file_upload" className="file_upload_label">
                 Browse
             </label>
+            <div style={{
+                fontFamily: "sans-serif",
+                color: "white",
+                marginTop: "5px",
+
+            }} className="warning">File size (Limit 500MB)</div>
             <input ref={fileRef} id="file_upload" type="file" accept="video/*" onChange={e => uploadFile(e, setNofFiles)}/>
             
             
@@ -91,6 +97,12 @@ function FileInput({
                                 headers: {
                                     'Content-Type': 'multipart/form-data'
                                 }
+                            }).catch(err => {
+                                loaderRef.current.style.display="none"
+                                mainRef.current.style.display = "none"
+                                navigate('/')
+                                // mainRef.current.style.backgroundColor="#3A3A3A"
+
                             })
                             console.log(uploadResponse)
                             const _id = Cookies.get('_id')
@@ -111,6 +123,7 @@ function FileInput({
                             navigate(`/main/${_id}/video/${fileResponse.data._id}`)
 
                         }}>Upload file</button>
+                        
                 </>
                 )})()}
                 
@@ -121,11 +134,12 @@ function FileInput({
 function UploadSources() {
     const linkRef = useRef()
     const fileRef = useRef()
-
+    const warnRef = useRef()
     return (
         <div className="upload_sources">
             <LinkInput ref={linkRef} />
             <FileInput ref={fileRef} />
+            
         </div>
     )
 

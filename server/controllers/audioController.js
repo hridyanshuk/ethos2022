@@ -1,6 +1,7 @@
 import { PythonShell } from "python-shell"
 
-
+import fs from "fs"
+const cwd = process.cwd();
 
 function convertController(req, res) {
     console.log("Test route")
@@ -13,9 +14,9 @@ function convertController(req, res) {
 
     let options = {
         mode: 'text',
-        pythonPath: 'C:/Users/Hridyanshu/AppData/Local/Programs/Python/Python310/python.exe',
+        pythonPath: `${cwd}/python/python.exe`,
         pythonOptions: ['-u'], 
-        scriptPath: 'C:/Users/Hridyanshu/Desktop/Github/ethos2022/server/pythonScripts',
+        scriptPath: `${cwd}/pythonScripts`,
         args: [filename, fileCount]
     }
     try {

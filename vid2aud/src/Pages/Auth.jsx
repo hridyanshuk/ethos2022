@@ -170,6 +170,8 @@ async function signupAPI(
                 error: response.data.error
             }
         }
+        Cookies.set('auth', true)
+        Cookies.set('_id', response.data._id)
         Cookies.set('token', response.data.token, {
             expires: response.data.expiresIn
         })

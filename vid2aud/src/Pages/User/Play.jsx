@@ -63,7 +63,7 @@ async function commentAdd(
     console.log(commentResponse)
 }
 
-async function getDuration(vidid, setMax, setVid) {
+async function getDuration(vidid, setMax, setvidName) {
     
     
         const _id = Cookies.get('_id')
@@ -74,6 +74,7 @@ async function getDuration(vidid, setMax, setVid) {
             }
         )
     setMax(vidInfo.data.duration)
+    setvidName(vidInfo.data.name)
     // setVid(vidInfo.data)
     console.log("x", vidInfo.data.duration)
     
@@ -129,20 +130,34 @@ function Play() {
 
     // const [vid, setVid] = useState()
     const [max, setMax] = useState()
-
-    console.log("Playing")
-    console.log(max)
-    const _id = Cookies.get('_id')
+    const [vidName, setvidName] = useState("")
+    // console.log("Playing")
+    // console.log(max)
+    // const _id = Cookies.get('_id')
 
     useEffect(() => {
-        getDuration(vidid, setMax)
+        getDuration(vidid, setMax, setvidName)
         // setMax(vid.data.duration)
     }, [])//setTime, setMax, getDuration, setVid
     return (
         <div className="main_scrn">
             
             <div className="main_content" >
-                
+                <span style={{
+                    marginTop: "30px",
+                    marginBottom: 0
+                }}>
+                    <h1 style={{
+                        display: "inline",
+                        fontFamily: "sans-serif",
+                        color: "white"
+                    }}>Playing: </h1>
+                    <h1 style={{
+                        color: "rgb(255, 73, 73)",
+                        fontFamily: "sans-serif",
+                        display: "inline"
+                    }}>{vidName}</h1>
+                </span>
                 <div className="play_info play_info_time">
                     
                     <output

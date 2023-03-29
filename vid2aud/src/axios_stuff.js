@@ -5,6 +5,9 @@ const instance = axios.create({
     baseURL: "http://localhost:8000/"
 })
 
+// const instance = axios.create({
+//     baseURL: "https://ethos-team-m.onrender.com/"
+// })
 function getHeaders() {
     const token = Cookies.get('token')
     console.log(token)

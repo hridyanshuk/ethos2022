@@ -17,14 +17,21 @@ const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 app.use(cookieParser())
-
+app.use((error, req, res, next) => {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(413).send('File too large');
+    }
+  
+    res.status(500).send(error);
+})
+  
 // app.use(cors())
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    next();
-  });
+    next()
+});
 const port = process.env.PORT || 8000
 
 const dbURL = "mongodb+srv://vidaud_admin:KeuWTX6NQDlYNnGf@cluster0.j0xpt8p.mongodb.net/?retryWrites=true&w=majority"
